@@ -11,10 +11,21 @@ env:
   REPORT_NAME: 'react-base-app'
 jobs:
   audit:
-    uses: ElJijuna/web-audit-report-action/.github/workflows/audit.yml@v1.0.0
-    with:
-      runtime: npm
-      report_name: $REPORT_NAME
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📥 Clonar el repositorio
+      uses: actions/checkout@v3
+    - name: 🔧 Instalar dependencias con npm ci
+      run: npm ci
+    - name: 🧨 Executing Script...
+      run: curl https://raw.githubusercontent.com/ElJijuna/Bash-Scripts/refs/heads/main/web-audit-report.sh | bash -s ${{ inputs.runtime }} $REPORT_NAME
+    - name: 📂 Verify repository content
+      run: ls -l
+    - name: 📦 Save report
+      uses: actions/upload-artifact@v4
+      with:
+        name: audit-report
+        path: $REPORT_NAME--web-audit.json
   publish-report:
     runs-on: ubuntu-latest
     needs: audit
