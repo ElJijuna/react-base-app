@@ -143,5 +143,6 @@
   },
   "devDependencies": {
     "sass": "^1.61.0"
-  }
+  },
+  "author": "pilmee <pilmee@gmail.com> (https://github.com/ElJijuna)"
 }
